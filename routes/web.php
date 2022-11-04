@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use ThiccPan\Larashipcost\Larashipcost;
 use ThiccPan\Larashipcost\ProvinsiLocationBuilder;
 use ThiccPan\Larashipcost\KotaLocationBuilder;
+use ThiccPan\Larashipcost\Provinsi;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,18 +36,16 @@ Route::get('/provinsi/{id}', function ($id)
     
 });
 
+// Route Get Provinsi pakai Enum
+Route::get('/provinsiEnum', function() {
+    $provinsi = new ProvinsiLocationBuilder;
+    echo $provinsi->setIdFromEnum(Provinsi::BANTEN)->getProvinsi();
+});
+
 Route::get('/kota', function ()
 {
     $lokasi = new KotaLocationBuilder;
     echo $lokasi->getAllKota();
-});
-
-Route::get('/kota/{id}', function ($id)
-{
-    $kota = new KotaLocationBuilder;
-    $kota->setId($id);
-    echo $kota->getKota();
-    
 });
 
 Route::get('/kota/{id}', function ($id)
