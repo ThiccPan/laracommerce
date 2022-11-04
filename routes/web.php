@@ -5,6 +5,7 @@ use ThiccPan\Larashipcost\Larashipcost;
 use ThiccPan\Larashipcost\ProvinsiLocationBuilder;
 use ThiccPan\Larashipcost\KotaLocationBuilder;
 use ThiccPan\Larashipcost\Provinsi;
+use ThiccPan\Larashipcost\ShippingBuilder;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,3 +56,14 @@ Route::get('/kota/{id}', function ($id)
     echo $kota->getKota();
     
 });
+
+// Route::get('/paket1', function ()
+// {
+//     $paket = new ShippingBuilder;
+//     $paket->setOrigin(501);
+//     $paket->setDestination(114);
+//     $paket->setWeight(1700);
+//     $paket->setCourier("jne");
+//     echo $paket->getShippingCost();
+
+// });
