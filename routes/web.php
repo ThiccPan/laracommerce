@@ -57,6 +57,11 @@ Route::get('/kota/{id}', function ($id)
     
 });
 
+Route::get('/kotak/{id}', function($id){
+    $kota = new Larashipcost;
+    echo $kota->setId($id)->getProvinsi($kota->getId());
+});
+
 // Route::get('/paket1', function ()
 // {
 //     $paket = new ShippingBuilder;
