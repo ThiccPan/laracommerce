@@ -6,6 +6,7 @@ use ThiccPan\Larashipcost\ProvinsiLocationBuilder;
 use ThiccPan\Larashipcost\KotaLocationBuilder;
 use ThiccPan\Larashipcost\Provinsi;
 use ThiccPan\Larashipcost\ShippingBuilder;
+use ThiccPan\Larashipcost\RajaOngkirProvider;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,47 +24,59 @@ Route::get('/', function () {
     echo $testpackage;
 });
 
-Route::get('/provinsi', function ()
-{
+Route::get('/home', function () {
+});
+
+Route::get('/provinsi', function () {
     $lokasi = new ProvinsiLocationBuilder;
     echo $lokasi->getAllProvinsi();
 });
 
-Route::get('/provinsi/{id}', function ($id)
-{
+Route::get('/provinsi/{id}', function ($id) {
     $provinsi = new ProvinsiLocationBuilder;
     $provinsi->setId($id);
     echo $provinsi->getProvinsi();
-    
 });
 
 // Route Get Provinsi pakai Enum
-Route::get('/provinsiEnum', function() {
+Route::get('/provinsiEnum', function () {
     $provinsi = new ProvinsiLocationBuilder;
     echo $provinsi->setIdFromEnum(Provinsi::BANTEN)->getProvinsi();
 });
 
-Route::get('/kota', function ()
-{
+Route::get('/kota', function () {
     $lokasi = new KotaLocationBuilder;
     echo $lokasi->getAllKota();
 });
 
-Route::get('/kota/{id}', function ($id)
-{
+Route::get('/kota/{id}', function ($id) {
     $kota = new KotaLocationBuilder;
     $kota->setId($id);
     echo $kota->getKota();
-    
 });
 
-// Route::get('/paket1', function ()
-// {
-//     $paket = new ShippingBuilder;
-//     $paket->setOrigin(501);
-//     $paket->setDestination(114);
-//     $paket->setWeight(1700);
-//     $paket->setCourier("jne");
-//     echo $paket->getShippingCost();
+Route::get('/paket1', function () {
+    $paket = new ShippingBuilder;
+    echo $paket->setOrigin(501)
+        ->setDestination(114)
+        ->setWeight(1700)
+        ->setCourier("jne")
+        ->getShippingCost();
+});
 
-// });
+Route::get('/rajaongkir/provinsi/{id}', function ($id) {
+    $rajaOProvinsi = new RajaOngkirLocationBuilder;
+    $rajaOProvinsi->setId($id);
+    echo $rajaOProvinsi->getProvinsi($id);
+});
+
+Route::get('/rajaongkir/provinsi/{id}', function ($id) {
+    $rajaOngkir = new RajaOngkirProvider;
+    $value = $rajaOngkir->setIdKota($id)
+        ->setDestination(114)
+        ->setWeight(1700)
+        ->setCourier("jne")
+        ->getShippingCost();
+
+    var_dump(json_decode($value, true));
+});
