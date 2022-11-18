@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use ThiccPan\Larashipcost\Larashipcost;
 use ThiccPan\Larashipcost\ProvinsiLocationBuilder;
@@ -19,56 +20,56 @@ use ThiccPan\Larashipcost\RajaOngkirProvider;
 |
 */
 
-Route::get('/', function () {
-    $testpackage = Larashipcost::testFunc();
-    echo $testpackage;
-});
+// Route::get('/', function () {
+//     $testpackage = Larashipcost::testFunc();
+//     echo $testpackage;
+// });
 
-Route::get('/home', function () {
-});
+// Route::get('/home', function () {
+// });
 
-Route::get('/provinsi', function () {
-    $lokasi = new ProvinsiLocationBuilder;
-    echo $lokasi->getAllProvinsi();
-});
+// Route::get('/provinsi', function () {
+//     $lokasi = new ProvinsiLocationBuilder;
+//     echo $lokasi->getAllProvinsi();
+// });
 
-Route::get('/provinsi/{id}', function ($id) {
-    $provinsi = new ProvinsiLocationBuilder;
-    $provinsi->setId($id);
-    echo $provinsi->getProvinsi();
-});
+// Route::get('/provinsi/{id}', function ($id) {
+//     $provinsi = new ProvinsiLocationBuilder;
+//     $provinsi->setId($id);
+//     echo $provinsi->getProvinsi();
+// });
 
-// Route Get Provinsi pakai Enum
-Route::get('/provinsiEnum', function () {
-    $provinsi = new ProvinsiLocationBuilder;
-    echo $provinsi->setIdFromEnum(Provinsi::BANTEN)->getProvinsi();
-});
+// // Route Get Provinsi pakai Enum
+// Route::get('/provinsiEnum', function () {
+//     $provinsi = new ProvinsiLocationBuilder;
+//     echo $provinsi->setIdFromEnum(Provinsi::BANTEN)->getProvinsi();
+// });
 
-Route::get('/kota', function () {
-    $lokasi = new KotaLocationBuilder;
-    echo $lokasi->getAllKota();
-});
+// Route::get('/kota', function () {
+//     $lokasi = new KotaLocationBuilder;
+//     echo $lokasi->getAllKota();
+// });
 
-Route::get('/kota/{id}', function ($id) {
-    $kota = new KotaLocationBuilder;
-    $kota->setId($id);
-    echo $kota->getKota();
-});
+// Route::get('/kota/{id}', function ($id) {
+//     $kota = new KotaLocationBuilder;
+//     $kota->setId($id);
+//     echo $kota->getKota();
+// });
 
-Route::get('/paket1', function () {
-    $paket = new ShippingBuilder;
-    echo $paket->setOrigin(501)
-        ->setDestination(114)
-        ->setWeight(1700)
-        ->setCourier("jne")
-        ->getShippingCost();
-});
+// Route::get('/paket1', function () {
+//     $paket = new ShippingBuilder;
+//     echo $paket->setOrigin(501)
+//         ->setDestination(114)
+//         ->setWeight(1700)
+//         ->setCourier("jne")
+//         ->getShippingCost();
+// });
 
-Route::get('/rajaongkir/provinsi/{id}', function ($id) {
-    $rajaOProvinsi = new RajaOngkirLocationBuilder;
-    $rajaOProvinsi->setId($id);
-    echo $rajaOProvinsi->getProvinsi($id);
-});
+// Route::get('/rajaongkir/provinsi/{id}', function ($id) {
+//     $rajaOProvinsi = new RajaOngkirLocationBuilder;
+//     $rajaOProvinsi->setId($id);
+//     echo $rajaOProvinsi->getProvinsi($id);
+// });
 
 Route::get('/rajaongkir/provinsi/{id}', function ($id) {
     $rajaOngkir = new RajaOngkirProvider;
@@ -79,4 +80,38 @@ Route::get('/rajaongkir/provinsi/{id}', function ($id) {
         ->getShippingCost();
 
     var_dump(json_decode($value, true));
+});
+
+Route::get('/rajaongkir/provinsi', function () {
+    $rajaOngkir = new RajaOngkirProvider;
+    $value = $rajaOngkir->getProvinsi();
+    $value = json_decode($value, true);
+
+    // var_dump(json_decode($value, true));
+    return view('form', [
+        'value' => $value 
+    ]);
+});
+
+Route::get('/kotak', function() {
+    $rajaOngkir = new RajaOngkirProvider;
+    $value = $rajaOngkir->getKota();
+    $value = json_decode($value, true);
+    return view('form', [
+        'value' => $value 
+    ]);
+});
+
+Route::post('/calculate', function(Request $req) {
+    $weight = $req->input('weight');
+    $courier = $req->input('courier');
+    $origin = $req->input('origin');
+    $destination = $req->input('destination');
+    $rajaOngkir = new RajaOngkirProvider;
+    $value = $rajaOngkir->setIdKota($origin)
+        ->setDestination($destination)
+        ->setWeight($weight)
+        ->setCourier($courier)
+        ->getShippingCost();
+    var_dump($value);
 });
