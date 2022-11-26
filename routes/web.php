@@ -7,6 +7,7 @@ use ThiccPan\Larashipcost\KotaLocationBuilder;
 use ThiccPan\Larashipcost\Provinsi;
 use ThiccPan\Larashipcost\ShippingBuilder;
 use ThiccPan\Larashipcost\RajaOngkirProvider;
+use ThiccPan\Larashipcost\RatuOngkirProvider;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +23,6 @@ use ThiccPan\Larashipcost\RajaOngkirProvider;
 Route::get('/', function () {
     $testpackage = Larashipcost::testFunc();
     echo $testpackage;
-});
-
-Route::get('/home', function () {
 });
 
 Route::get('/provinsi', function () {
@@ -79,4 +77,53 @@ Route::get('/rajaongkir/provinsi/{id}', function ($id) {
         ->getShippingCost();
 
     var_dump(json_decode($value, true));
+});
+
+// route ratuongkir
+
+Route::get('/ratuongkir/provinsi/', function () {
+    $ratuOngkir = new RatuOngkirProvider;
+    $value = $ratuOngkir->getAllProvinsi();
+    var_dump(json_decode($value, true));
+});
+
+Route::get('/ratuongkir/provinsi/{idProv}', function ($idProv) {
+    $ratuOngkir = new RatuOngkirProvider;
+    $value = $ratuOngkir
+        ->setIdProvinsi($idProv)
+        ->getProvinsi();
+
+    $output = json_decode($value, true);
+    var_dump($output['provinsi']);
+});
+
+Route::get('/ratuongkir/provinsi/{idProv}/kota', function ($idProv) {
+    $ratuOngkir = new RatuOngkirProvider;
+    $value = $ratuOngkir->setIdProvinsi($idProv)
+        ->getAllKota();
+    $value = json_decode($value, true);
+
+    var_dump($value['latitude']);
+});
+
+Route::get('/ratuongkir/provinsi/{idProv}/kota/{idKota}', function ($idProv, $idKota) {
+    $ratuOngkir = new RatuOngkirProvider;
+    $value = $ratuOngkir->setIdProvinsi($idProv)
+        ->setIdKota($idKota)
+        ->getKota();
+        $value = json_decode($value, true);
+
+        var_dump($value['latitude']);
+});
+
+Route::get('/ratuongkir/shipping/{idAsal}/{idTujuan}', function ($idAsal, $idTujuan)
+{
+    $ratuongkir = new RatuOngkirProvider;
+    $value = $ratuongkir
+    ->setIdKota($idAsal)
+    ->setDestination($idTujuan)
+    ->setWeight(10)
+    ->getShippingCost();
+
+    dd($value);
 });
