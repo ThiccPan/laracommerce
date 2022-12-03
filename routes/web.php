@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use NunoMaduro\Collision\Provider;
 use ThiccPan\Larashipcost\Larashipcost;
 use ThiccPan\Larashipcost\ProvinsiLocationBuilder;
 use ThiccPan\Larashipcost\KotaLocationBuilder;
@@ -20,57 +21,6 @@ use ThiccPan\Larashipcost\RatuOngkirProvider;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Route::get('/', function () {
-//     $testpackage = Larashipcost::testFunc();
-//     echo $testpackage;
-// });
-
-// Route::get('/home', function () {
-// });
-
-// Route::get('/provinsi', function () {
-//     $lokasi = new ProvinsiLocationBuilder;
-//     echo $lokasi->getAllProvinsi();
-// });
-
-// Route::get('/provinsi/{id}', function ($id) {
-//     $provinsi = new ProvinsiLocationBuilder;
-//     $provinsi->setId($id);
-//     echo $provinsi->getProvinsi();
-// });
-
-// // Route Get Provinsi pakai Enum
-// Route::get('/provinsiEnum', function () {
-//     $provinsi = new ProvinsiLocationBuilder;
-//     echo $provinsi->setIdFromEnum(Provinsi::BANTEN)->getProvinsi();
-// });
-
-// Route::get('/kota', function () {
-//     $lokasi = new KotaLocationBuilder;
-//     echo $lokasi->getAllKota();
-// });
-
-// Route::get('/kota/{id}', function ($id) {
-//     $kota = new KotaLocationBuilder;
-//     $kota->setId($id);
-//     echo $kota->getKota();
-// });
-
-// Route::get('/paket1', function () {
-//     $paket = new ShippingBuilder;
-//     echo $paket->setOrigin(501)
-//         ->setDestination(114)
-//         ->setWeight(1700)
-//         ->setCourier("jne")
-//         ->getShippingCost();
-// });
-
-// Route::get('/rajaongkir/provinsi/{id}', function ($id) {
-//     $rajaOProvinsi = new RajaOngkirLocationBuilder;
-//     $rajaOProvinsi->setId($id);
-//     echo $rajaOProvinsi->getProvinsi($id);
-// });
 
 Route::get('/rajaongkir/provinsi/{id}', function ($id) {
     $rajaOngkir = new RajaOngkirProvider;
@@ -101,20 +51,6 @@ Route::get('/kotak', function() {
     return view('form', [
         'value' => $value 
     ]);
-});
-
-Route::post('/calculate', function(Request $req) {
-    $weight = $req->input('weight');
-    $courier = $req->input('courier');
-    $origin = $req->input('origin');
-    $destination = $req->input('destination');
-    $rajaOngkir = new RajaOngkirProvider;
-    $value = $rajaOngkir->setIdKota($origin)
-        ->setDestination($destination)
-        ->setWeight($weight)
-        ->setCourier($courier)
-        ->getShippingCost();
-    var_dump($value);
 });
 
 // route ratuongkir
@@ -165,3 +101,49 @@ Route::get('/ratuongkir/shipping/{idAsal}/{idTujuan}', function ($idAsal, $idTuj
 
     var_dump($value);
 });
+
+// Route Utama
+
+Route::get('/laracommerce', function ()
+{
+    $rajaOngkir = new RajaOngkirProvider;
+    $valueRaja = $rajaOngkir->getKota();
+    $valueRaja = json_decode($valueRaja, true);
+
+    $ratuOngkir = new RatuOngkirProvider;
+    $valueRatu = $ratuOngkir->setIdProvinsi(1)->getAllKota();
+    $valueRatu = json_decode($valueRatu, true);
+
+    return view('forminput', ['value1' => $valueRaja, 'value2' => $valueRatu ]);
+});
+
+Route::post('/calculateRatuOngkir', function(Request $req) {
+    $weight = $req->input('weight');
+    $courier = $req->input('courier');
+    $origin = $req->input('origin');
+    $destination = $req->input('destination');
+    $ratuongkir = new RatuOngkirProvider;
+    $value = $ratuongkir
+    ->setIdKota($origin)
+    ->setDestination($destination)
+    ->setWeight(10)
+    ->getShippingCost();
+
+    return view('outputratu', ['value' => $value,'weight'=> $weight, 'origin'=> $origin, 'destination'=> $destination, 'courier'=>$courier ]);
+});
+
+Route::post('/calculateRajaOngkir', function(Request $req) {
+    $weight = $req->input('weight');
+    $courier = $req->input('courier');
+    $origin = $req->input('origin');
+    $destination = $req->input('destination');
+    $rajaOngkir = new RajaOngkirProvider;
+    $value = $rajaOngkir->setIdKota($origin)
+        ->setDestination($destination)
+        ->setWeight($weight)
+        ->setCourier($courier)
+        ->getShippingCost();
+    $value=json_decode($value, true);
+    return view('outputraja', ['value' => $value,'weight'=> $weight]);
+});
+   

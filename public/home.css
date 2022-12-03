@@ -1,0 +1,146 @@
+body{
+    display: flex;
+    flex-direction: column;
+    background-color:#1976D1;
+    padding: 60px;
+}
+
+.con-base{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #E4F4FC;
+    padding-top: 70px;
+    padding-bottom: 70px;
+    border-radius: 50px;
+}
+
+.con-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    margin-top: 50px;
+    padding: 30px 50px;
+    border-radius: 40px;
+}
+
+.row-form{
+    display: flex;
+    margin-top: 18px;
+}
+
+#item-left{
+    margin-right: 40px;
+}
+
+.label{
+    font-family: 'Poppins';
+    color: #059CE1;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 48px'
+}
+
+#berat{
+    text-align: center;
+}
+
+button{
+    font-family: 'Poppins';
+    color: white;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 48px;
+
+    border: none;
+    width: 102%;
+    padding: 7px 165px 7px 165px;
+    margin-top: 42px;
+    background: #059CE1;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.input{
+    padding: 10px;
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 24px;
+    color: #2D3253;
+    outline: none;
+    cursor: pointer;
+
+    width: 97%;
+    height: 20%;
+    background: #FFFFFF;
+    border: 1px solid #059CE1;
+    border-radius: 20px;
+}
+
+#input-berat{
+    background: #FFFFFF;
+    border: 1px solid #059CE1;
+    border-radius: 20px;
+    outline: none;
+
+    padding: 10px;
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 24px;
+    color: #2D3253;
+    text-align: center;
+}
+
+.con-opsi:hover .opsi{
+    display: block;
+}
+
+.opsi{
+    position: absolute;
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 18px;
+    color: #2D3253;
+
+    max-height: 200px;
+    width: 25%;
+    background: #E4F4FC;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    display: none;
+    overflow: scroll;
+}
+
+.opsi div{
+    padding: 10px 20px;
+}
+
+.opsi div:hover{
+    cursor: pointer;
+    background-color: #A7D3FE;
+    color: #2D3253;
+}
+
+#opsi-asal2{
+    visibility: hidden;
+}
+#opsi-tujuan2{
+    visibility: hidden;
+}
+
+#opsi-kurir{
+    width: 20%;
+}
+#opsi-kurir2{
+    width: 20%;
+    visibility: hidden;
+}
+
+#opsi-provider{
+    width: 20%;
+    overflow: hidden;
+}
+

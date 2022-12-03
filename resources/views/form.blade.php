@@ -17,8 +17,7 @@
     <div class="container-utama flex items-center justify-center">
         <div class="bg-slate-300 w-9/12 p-5">
             <h1 class="font-bold text-center text-2xl mb-5">Input Data</h1>
-            
-            <form action="/calculate" method="POST">
+            <form action="/calculateRajaOngkir" method="POST">
                 @csrf
             <div class="grid grid-cols-6 gap-6">
                 <div class="col-span-6 sm:col-span-3">
