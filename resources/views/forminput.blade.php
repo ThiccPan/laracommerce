@@ -22,10 +22,11 @@
                     <div class="item-form" id="item-left">
                         <label for="input" class="label">Asal</label><br>
                         <div class="con-opsi">
-                            <input type="text" class="input" id="in-asal" placeholder="Kota, Provinsi" readonly name="origin" required>
+                            <input type="text" class="input" id="in-asal" placeholder="Kota, Provinsi" readonly required>
+                            <input type="hidden" class="input" id="in-asal-hidden" readonly name="origin" required>
                             <div class="opsi" id="opsi-asal">
                                 @foreach ($value1["rajaongkir"]["results"] as $item)
-                                    <div onclick="showAsal('{{$item["city_id"]}}')">{{ $item["city_name"]}}</div>
+                                    <div onclick="showAsal('{{$item["city_id"]}}','{{$item["city_name"]}}')">{{ $item["city_name"]}}</div>
                                 @endforeach
                                 {{-- <div onclick="showAsal('Kota Malang, Jatim')">Kota Malang, Jawa Timur</div>
                                 <div onclick="showAsal('Kota Surabaya, Jatim')">Kota Surabaya, Jawa Timur</div>
@@ -35,7 +36,7 @@
                             </div>
                             <div class="opsi" id="opsi-asal2">
                                 @foreach ($value2 as $item)
-                                    <div onclick="showAsal('{{$item["id"]}}')">{{ $item["kota"]}}</div>
+                                    <div onclick="showAsal('{{$item["id"]}}','{{$item["kota"]}}')">{{ $item["kota"]}}</div>
                                 @endforeach
                             </div>
                         </div>
@@ -43,10 +44,11 @@
                     <div class="item-form" id="item-right">
                         <label for="input" class="label">Tujuan</label><br>
                         <div class="con-opsi">
-                            <input type="text" class="input" id="in-tujuan" placeholder="Kota, Provinsi" readonly name="destination" required>
+                            <input type="text" class="input" id="in-tujuan" placeholder="Kota, Provinsi" readonly required>
+                            <input type="hidden" class="input" id="in-tujuan-hidden" readonly name="destination" required>
                             <div class="opsi" id="opsi-tujuan">
                                 @foreach ($value1["rajaongkir"]["results"] as $item)
-                                    <div onclick="showTujuan('{{$item["city_id"]}}')">{{ $item["city_name"]}}</div>
+                                    <div onclick="showTujuan('{{$item["city_id"]}}','{{$item["city_name"]}}')">{{ $item["city_name"]}}</div>
                                 @endforeach
                                 {{-- <div onclick="showTujuan('Kota Malang, Jatim')">Kota Malang, Jawa Timur</div>
                                 <div onclick="showTujuan('Kota Surabaya, Jatim')">Kota Surabaya, Jawa Timur</div>
@@ -56,7 +58,7 @@
                             </div>
                             <div class="opsi" id="opsi-tujuan2">
                                 @foreach ($value2 as $item)
-                                    <div onclick="showTujuan('{{$item["id"]}}')">{{ $item["kota"]}}</div>
+                                    <div onclick="showTujuan('{{$item["id"]}}','{{$item["kota"]}}')">{{ $item["kota"]}}</div>
                                 @endforeach
                             </div>
                         </div>
@@ -93,11 +95,13 @@
             </form>
         </div>
         <script>
-            function showAsal(anything){
-                document.querySelector('#in-asal').value=anything;
+            function showAsal(id, nama){
+                document.querySelector('#in-asal').value=nama;
+                document.querySelector('#in-asal-hidden').value=id;
             }
-            function showTujuan(anything){
-                document.querySelector('#in-tujuan').value=anything;
+            function showTujuan(id, nama){
+                document.querySelector('#in-tujuan').value=nama;
+                document.querySelector('#in-tujuan-hidden').value=id;
             }
             function showKurir(anything){
                 document.querySelector('#in-kurir').value=anything;
