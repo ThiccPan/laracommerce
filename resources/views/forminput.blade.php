@@ -28,11 +28,6 @@
                                 @foreach ($value1["rajaongkir"]["results"] as $item)
                                     <div onclick="showAsal('{{$item["city_id"]}}','{{$item["city_name"]}}')">{{ $item["city_name"]}}</div>
                                 @endforeach
-                                {{-- <div onclick="showAsal('Kota Malang, Jatim')">Kota Malang, Jawa Timur</div>
-                                <div onclick="showAsal('Kota Surabaya, Jatim')">Kota Surabaya, Jawa Timur</div>
-                                <div onclick="showAsal('Kab. Malang, Jatim')">Kabupaten Malang, Jawa Timur</div>
-                                <div onclick="showAsal('Kab. Madiun, Jatim')">Kabupaten Madiun, Jawa Timur</div>
-                                <div onclick="showAsal('Kota Jember, Jatim')">Kota Jember, Jawa Timur</div> --}}
                             </div>
                             <div class="opsi" id="opsi-asal2">
                                 @foreach ($value2 as $item)
@@ -50,11 +45,6 @@
                                 @foreach ($value1["rajaongkir"]["results"] as $item)
                                     <div onclick="showTujuan('{{$item["city_id"]}}','{{$item["city_name"]}}')">{{ $item["city_name"]}}</div>
                                 @endforeach
-                                {{-- <div onclick="showTujuan('Kota Malang, Jatim')">Kota Malang, Jawa Timur</div>
-                                <div onclick="showTujuan('Kota Surabaya, Jatim')">Kota Surabaya, Jawa Timur</div>
-                                <div onclick="showTujuan('Kab. Malang, Jatim')">Kabupaten Malang, Jawa Timur</div>
-                                <div onclick="showTujuan('Kab. Madiun, Jatim')">Kabupaten Madiun, Jawa Timur</div>
-                                <div onclick="showTujuan('Kota Jember, Jatim')">Kota Jember, Jawa Timur</div> --}}
                             </div>
                             <div class="opsi" id="opsi-tujuan2">
                                 @foreach ($value2 as $item)
@@ -128,6 +118,5 @@
                 };
             }
         </script>
-        {{-- <?php var_dump(anything); ?> --}}
     </body>
 </html>
